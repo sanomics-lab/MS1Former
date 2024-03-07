@@ -26,7 +26,7 @@ def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--file_dir",
-        default="./mzml",
+        default="./mzml/raw",
         help="Directory that contains only DIA data files. Centroided .mzXML, .mzML or .raw files from Thermo Fisher equipments are supported. (For Linux systems, `mono` tool has to be installed for the supporting of .raw files. https://www.mono-project.com/download/stable/#download-lin)",
     )
 
@@ -36,7 +36,7 @@ def get_parser():
     parser.add_argument("--mz_max", default=1800, type=int, help="Maximum mz")
     parser.add_argument("--mz_min", default=260, type=int, help="minimun mz ")
     parser.add_argument("--mass_H", default=1.0078, type=float, help="H mass")
-    parser.add_argument("--save_dir", default="./mzml_parsed")
+    parser.add_argument("--save_dir", default="./mzml/parsed")
     return parser
 
 
