@@ -10,7 +10,7 @@ source activate mspectra
 # Data preprocessing
 
 ```
-python dataset.py --file_dir ./mzml/raw --save_dir ./mzml/parsed
+python dataset.py --file_dir ./mzml/raw --save_dir ./mzml/parsed/IPX0000937000_resolution_10_sparse
 ```
 # Train and Test
 

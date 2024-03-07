@@ -88,14 +88,14 @@ config = OmegaConf.create(
             "early_stop": 1000,
         },
         "dataset_params": {
-            "dataset_dir": "/mnt/sano2/spectra_rawdata/IPX0001444001_resolution_10_sparse",
+            "dataset_dir": "mzml/parsed/IPX0000937000_resolution_10_sparse",
             "max_rt_len": None,
-            "train_labels_path": "/home/snn/workspace/spectra00/spectra_classfification/DeepDDA-disease/data/multilabel_Oct_27.xlsx",
-            "val_labels_path": "/home/snn/workspace/spectra00/spectra_classfification/DeepDDA-disease/data/val_multilabel_Oct_27.xlsx",
+            "train_labels_path": "mzml/labels/0_fold_IPX0000937000_train.xlsx",
+            "val_labels_path": "mzml/labels/0_fold_IPX0000937000_test.xlsx",
         },
         "cuda": True,
-        "model_dir": "/mnt/sano1/home/snn/workplace/spectra00/spectra_classfification/DeepDDA-disease/models/model_dir_resolution_10_oct_27_multilabel",
-        "loger_dir": "/mnt/sano1/home/snn/workplace/spectra00/spectra_classfification/DeepDDA-disease/logs/logs_resolution_10_oct_27_multilabel",
+        "model_dir": "models/model_resolution_10",
+        "loger_dir": "logs/logs_resolution_10",
     }
 )
 
@@ -112,7 +112,6 @@ wandb.init(
     },
 )
 
-# writer = SummaryWriter("/home/snn/workspace/spectra00/spectra_classfification/DeepDDA-disease/tensorboard/tensorboard_resolution_10_july_21_test")
 now_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 if not os.path.exists(config.loger_dir):
     os.mkdir(config.loger_dir)
@@ -203,14 +202,10 @@ def train():
             sqsum = 0.0
             for name, param in model.named_parameters():
                 if param.grad is not None:
-                    # writer.add_scalar("param_grad",np.array(param.grad.mean().item()),steps)
                     sqsum += (param.grad**2).sum().item()
-            # writer.add_scalar("grad_norm", np.sqrt(sqsum), steps)
 
             optimizer.step()
             steps += 1
-            # writer.add_scalar("learn_rate",np.array(optimizer.param_groups[0]['lr']),steps)
-            # writer.add_scalar("train_loss",np.array(loss_value.item()),steps)
             if steps % config.train_params.log_interval == 0:
                 corrects = (torch.max(logits, 1)[1] == batch_labels).sum()
                 train_acc = 100.0 * corrects / config.train_params.batch_size
@@ -300,8 +295,6 @@ def eval(val_loader, model, steps):
     data_nums = len(val_loader.dataset)
     ave_loss /= data_nums
     accuracy = 100 * corrects / data_nums
-    # writer.add_scalar("val_loss",np.array(ave_loss),steps)
-    # writer.add_scalar("val_accuracy",np.array(accuracy.cpu()),steps)
     print(
         "\n Evalation - loss:{:.6f} acc:{:.4f} %{}/{}\n".format(
             ave_loss, accuracy, corrects, data_nums

@@ -36,7 +36,7 @@ def get_parser():
     parser.add_argument("--mz_max", default=1800, type=int, help="Maximum mz")
     parser.add_argument("--mz_min", default=260, type=int, help="minimun mz ")
     parser.add_argument("--mass_H", default=1.0078, type=float, help="H mass")
-    parser.add_argument("--save_dir", default="./mzml/parsed")
+    parser.add_argument("--save_dir", default="./mzml/parsed/IPX0000937000_resolution_10_sparse")
     return parser
 
 
