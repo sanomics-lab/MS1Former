@@ -22,14 +22,14 @@ from tqdm import tqdm
 
 def get_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--file_dir", default = "/mnt/sano-jb/rawfile/IPX0006198001/mzml",
+    parser.add_argument("--file_dir", default = "./mzml",
                         help = "Directory that contains only DIA data files. Centroided .mzXML, .mzML or .raw files from Thermo Fisher equipments are supported. (For Linux systems, `mono` tool has to be installed for the supporting of .raw files. https://www.mono-project.com/download/stable/#download-lin)")
 
     parser.add_argument("--spectrum_resolution",default=10,type=float,help="Spectrum resolution")
     parser.add_argument("--mz_max",default=1800,type= int, help="Maximum mz")
     parser.add_argument("--mz_min",default=260,type=int,help="minimun mz ")
     parser.add_argument("--mass_H",default=1.0078,type= float,help="H mass")
-    parser.add_argument("--save_dir",default="/mnt/sano-jb/zly/IPX0006198001_yixian")
+    parser.add_argument("--save_dir",default="./mzml_parsed")
     return parser
 
 class MS1_Chrom:
@@ -136,8 +136,8 @@ def process_spectrum(spectrum_mz_ls,spectrum_intensity_ls,config):
     # normalize intensity
     spectrum_intensity_cutted_ls = [spectrum_intensity_ls[idx] for idx,mz in enumerate(spectrum_mz_ls) if mz >= config.mz_min and mz <= config.mz_max]
     spectrum_intensity = np.array(spectrum_intensity_cutted_ls, dtype=np.float32)
-    #norm_intensity = spectrum_intensity / np.max(spectrum_intensity)
-    #norm_intensity = z_score(spectrum_intensity)
+    norm_intensity = spectrum_intensity / np.max(spectrum_intensity)
+    norm_intensity = z_score(spectrum_intensity)
     # fill spectrum holders
     spectrum_holder = np.zeros(shape=MZ_SIZE, dtype=np.float32)
     for index in range(neutral_mass_location.size):
@@ -194,7 +194,7 @@ def main_function(config):
             #s = end-start
             #print("Time has been consumed:{}".format(s))
     infos = pd.DataFrame(infos_dict)
-    infos.to_excel("/mnt/sano1/home/snn/workplace/spectra00/spectra_classfification/DeepDDA-disease/data/IPX0006198001_resolution_10.xlsx")
+    infos.to_excel(f"{config.save_dir}/resolution_10.xlsx")
 
 if __name__ == "__main__":
     parser = get_parser()
