@@ -57,8 +57,8 @@ config = OmegaConf.create(
             "test_labels_path": "mzml/labels/0_fold_IPX0000937000_test.xlsx",
         },
         "cuda": True,
-        "model_dir": "models/model_dir_cnn_rnn",
-        "loger_dir": "logs/logs_cnn_rnn",
+        "model_dir": "outputs/models/model_dir_cnn_rnn",
+        "loger_dir": "outputs/logs/logs_cnn_rnn",
     }
 )
 writer = SummaryWriter("tensorboard/tensorboard_cnn_rnn")

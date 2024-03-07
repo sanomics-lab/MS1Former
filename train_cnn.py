@@ -32,6 +32,9 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import wandb
 
+os.environ["WANDB_MODE"] = "offline"
+
+
 config = OmegaConf.create(
     {
         "model_params": {
@@ -94,8 +97,8 @@ config = OmegaConf.create(
             "val_labels_path": "mzml/labels/0_fold_IPX0000937000_test.xlsx",
         },
         "cuda": True,
-        "model_dir": "models/model_resolution_10",
-        "loger_dir": "logs/logs_resolution_10",
+        "model_dir": "outputs/models/model_resolution_10",
+        "loger_dir": "outputs/logs/logs_resolution_10",
     }
 )
 
