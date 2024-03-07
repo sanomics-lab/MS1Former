@@ -50,20 +50,18 @@ config = OmegaConf.create(
             "early_stop": 1000,
         },
         "dataset_params": {
-            "dataset_dir": "/mnt/sano1/rawfile/bin_data",
+            "dataset_dir": "mzml/parsed/IPX0000937000_resolution_10_sparse",
             "max_rt_len": None,
-            "train_labels_path": "/home/snn/workspace/spectra00/data/DeepDDA-disease/data/train_infos_new.xlsx",
-            "val_labels_path": "/home/snn/workspace/spectra00/data/DeepDDA-disease/data/val_infos_new.xlsx",
-            "test_labels_path": "/home/snn/workspace/spectra00/data/DeepDDA-disease/data/val_infos_new.xlsx",
+            "train_labels_path": "mzml/labels/0_fold_IPX0000937000_train.xlsx",
+            "val_labels_path": "mzml/labels/0_fold_IPX0000937000_test.xlsx",
+            "test_labels_path": "mzml/labels/0_fold_IPX0000937000_test.xlsx",
         },
         "cuda": True,
-        "model_dir": "/home/snn/workspace/spectra00/data/DeepDDA-disease/model_dir_cnn_rnn",
-        "loger_dir": "/home/snn/workspace/spectra00/data/DeepDDA-disease/logs_cnn_rnn",
+        "model_dir": "models/model_dir_cnn_rnn",
+        "loger_dir": "logs/logs_cnn_rnn",
     }
 )
-writer = SummaryWriter(
-    "/home/snn/workspace/spectra00/data/DeepDDA-disease/tensorboard/tensorboard_cnn_rnn"
-)
+writer = SummaryWriter("tensorboard/tensorboard_cnn_rnn")
 now_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 log = open(config.loger_dir + "/" + now_time + ".log", "w")
 
@@ -147,8 +145,7 @@ def train():
 
             optimizer.step()
             steps += 1
-            # import IPython
-            # IPython.embed()
+
             writer.add_scalar(
                 "learn_rate", np.array(optimizer.param_groups[0]["lr"]), steps
             )
