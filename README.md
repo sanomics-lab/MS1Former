@@ -14,6 +14,8 @@ python dataset.py --file_dir ./mzml/raw --save_dir ./mzml/parsed/IPX0000937000_r
 ```
 # Train and Test
 
+Model checkpoint can be downloaded from [zenodo](!https://zenodo.org/api/records/10791588/draft/files/model-ms1former.pt/content).
+
 ```
 python train_cnn.py
 python predict.py
