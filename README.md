@@ -10,7 +10,7 @@ source activate mspectra
 # Data preprocessing
 
 ```
-python dataset.py
+python dataset.py --file_dir ./mzml --save_dir ./mzml_parsed
 ```
 # Train and Test
 
